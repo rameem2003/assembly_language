@@ -1,0 +1,89 @@
+.MODEL SMALL
+.STACK 100H 
+
+.DATA
+
+MSG1 DB 'ENTER THE FIRST NUMBER: $'
+MSG2 DB 'ENTER THE SECOND NUMBER: $'
+RESULT DB 'THE RESULT IS: $'
+THANK DB 'Thank you $'
+
+.CODE
+
+
+MAIN PROC
+    MOV AX, @DATA ; INIT DATA SEGMENT
+    MOV DS,AX
+    
+    
+    ;PRINT THE FIRST MSG
+    
+    MOV AH,9
+    LEA DX, MSG1
+    INT 21H    
+    
+    ;COLLECT THE FIRST NUMBER FROM USER
+    
+    MOV AH,1
+    INT 21H
+    MOV BL,AL
+    
+    ;CREAT THE NEW LINE FOR NEXT NUMBER INPUT
+    
+    MOV AH,2
+    MOV DL,10
+    INT 21H
+    MOV DL,13
+    INT 21H
+    
+    ;PRINT THE SECOND MSG
+    MOV AH,9
+    LEA DX, MSG2
+    INT 21H      
+    
+    
+    ;COLLECT THE SECOND NUMBER FROM USER
+    MOV AH,1
+    INT 21H
+    MOV CL,AL
+    
+    
+    ;SUM TWO NUMNERS
+    ADD BL,CL
+    SUB BL,48 
+    
+    
+    
+    ;CREAT THE NEW LINE FOR FINAL OUTPUT
+    MOV AH,2
+    MOV DL,10
+    INT 21H
+    MOV DL,13
+    INT 21H
+    
+    
+    ;PRINT OUTPUT MSG
+    MOV AH,9
+    LEA DX, RESULT
+    INT 21H
+    
+    ;PRINT THE FINAL OUTPUT
+    
+    MOV AH,2
+    MOV DL,BL
+    INT 21H
+
+    ;CREAT THE NEW LINE FOR LAST MSG
+    MOV AH,2
+    MOV DL,10
+    INT 21H
+    MOV DL,13
+    INT 21H
+
+    ;PRINT THE LAST MSG
+    MOV AH,9
+    LEA DX, THANK
+    INT 21H
+    
+    MAIN ENDP
+END MAIN
